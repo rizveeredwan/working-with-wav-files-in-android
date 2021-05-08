@@ -9,4 +9,4 @@ Now, I will see breakdown each task one by one and discuss my approach. This wri
 - [Accessing a file](#accessing-a-file)
 
 ### Accessing a file
-I put my wav file in the ``asset`` folder. I have attached a screenshot to understand my ![File Structure](https://octodex.github.com/images/yaktocat.png). 
+I put my wav file in the ``asset`` folder. I have attached a screenshot to understand my ![File Structure](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/file_structure.png). 
