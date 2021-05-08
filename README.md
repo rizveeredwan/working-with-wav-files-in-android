@@ -103,12 +103,55 @@ byteBuffer.getInt() // will provide the int converted value stored in byteBuffer
 byteBuffer.getShort() // will provide the short converted value stored in byteBuffer 
 // ByteBuffer automatically handles the sign values and provides the correct output
 ```
-Now, we will talk how, we can read the actual audio data. The logic is almost similar which we have discussed upto now. But, there are some important factor to highlight. In, ``BitsPerSample`` field, we get values like 8, 16, etc. Dividing it by 8 (8/8 =1, 16/8 = 2) we get the number of bytes required to read an individual sample. So, the whole reading audio data process can be done as follow, 
+Now, we will talk how, we can read the actual audio data. The logic is almost similar which we have discussed upto now. But, there are some important factor to highlight. In, ``BitsPerSample`` field, we get values like 8, 16, etc. Dividing it by 8 (8/8 =1, 16/8 = 2) we get the number of bytes required to read an individual sample. So, the whole reading audio data process can be done as follows,
+```
+public float convertToFloat(byte[] array, int type) { // Another way to convert a byte array to a number, you can also use the previous function
+        ByteBuffer buffer = ByteBuffer.wrap(array);
+        if (type == 1){
+            buffer.order(LITTLE_ENDIAN);
+        }
+        return (float) buffer.getShort(); //converted it to short and then typecasted it to float
+    }
 
-
+bytePerSample = bitsPerSample/8; // how many byte(s) to read to get a single sample 
+ArrayList<Float> dataVector = new ArrayList<>();
+while (true){
+    byte byteArray[] = new byte[bytePerSample]; // making byte array
+    int v = fileInputstream.read(byteArray, 0, bytePerSample); // reading the byte(s)
+    value = convertToFloat(byteArray,1); // I needed float value to work with, so using ByteBuffer first I converted it to short and then type casted it to float.
+    dataVector.add(value); // A vector list container to store the value 
+    if (v == -1) break; // when all the bytes will be read, we will get -1 in variable v
+  }
+```
 This basically sums up the basic logic block to read an wav file. The complete code can be found in [WAVManipulation.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/WavManipulation.java). 
 
 ### Writing a WAV file 
-As, we have already understood the file's structure 
+As, we have already understood the file's (byte information and fields) structure, now to create a new WAV file, we just have to put all the informations accordingly, following the field's order, data types (String, int, short) and bit orders (BIG or LITTLE ENDIAN). The main points of the work flow can be stated as follows, 
+- First, we need to create a pointer to write the data. We, will create the file in SD Card or external environment. Then based on that, we will create the file writing pointer. 
+```
+File root = android.os.Environment.getExternalStorageDirectory();
+File dir = new File (root.getAbsolutePath() + "/new_wav_directory");
+if (dir.exists() == false){
+     dir.mkdirs();
+}
+File file = new File(dir, "new_wav_file.wav");
+OutputStream os;
+os = new FileOutputStream(file);
+BufferedOutputStream bos = new BufferedOutputStream(os);
+DataOutputStream outFile = new DataOutputStream(bos);
+```
+- Now, the challenge comes, how to convert the information of each field in bytes and write them. 
+```
+// To convert the strings, we can directly use writeBytes function
+outFile.writeBytes("RIFF");
+```
+```
+// To convert a numerical value to bytes and to write in LITTLE ENDIAN format we can use reverseBytes and corresponding data type function
+outFile.writeInt(Integer.reverseBytes((int)ChunkSize)); // 04 - how big is the rest of this file?
+outFile.writeShort(Short.reverseBytes((short)Format)); // 20 - what is the audio format? 1 for PCM = Pulse Code Modulation
+```
+
+
+
 
 
