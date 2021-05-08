@@ -77,7 +77,7 @@ Here, we will discuss the important aspects to read a WAV file through the follo
 File file = new File(audioFile); // absolute path of the audio file 
 InputStream fileInputstream = new FileInputStream(file); // we will use InputStream to read the bytes
 ```
-- As, from the previous section, we already know the byte size of each field, so we can use that information to exact the value for each field. For example if we want to read ``ChunkID`` field, we can extract the byte information as follows,
+- As, from the previous section, we already know the byte size of each field, so we can use that information to extact the value for each field. For example if we want to read ``ChunkID`` field, we can extract the byte information as follows,
 
 ```
 byte byteArray[] = new byte[4]; // Declaration of Byte Array for the desired size
