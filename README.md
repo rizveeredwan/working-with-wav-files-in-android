@@ -7,6 +7,8 @@ In python, it is quite easy to read data from an wav file and to write back into
 ## Logics and Codes
 Now, I will see breakdown each task one by one and discuss my approach. This writeup mainly focuses on how we can read the complete byte information from an wav file, convert it to an workable state so that we can perform manipulation and finally how we can construct a new wav file after the manipulation of the data along with accessing the newly created file. Sections will be, 
 - [Accessing a file](#accessing-a-file)
+- [Structure of a WAV file](#structure-of-a-wav-file)
+- [Reading a WAV file](#reading-a-wav-file)
 
 ### Accessing a file
 I put my wav file in the ``asset`` folder. I have attached a screenshot to understand my file structure. Here, you can see the wav file (20_sec.wav). I had to access this file now.
@@ -64,12 +66,44 @@ Numbers are in LITTLE ENDIAN format
 ```
 
 ### Reading a WAV file 
+Here, we will discuss the important aspects to read a WAV file through the following points, 
 
-We have to read byte by byte from the file to extract all the information. To initiate the reading pointer, we will use the following code snippet. 
+- We have to read byte by byte from the file to extract all the information. To initiate the reading pointer, we will use the following code snippet. 
 ```
 File file = new File(audioFile); // absolute path of the audio file 
 InputStream fileInputstream = new FileInputStream(file); // we will use InputStream to read the bytes
 ```
+- As, from the previous section, we already know the byte size of each field, so we can use that information to exact the value for each field. For example if we want to read ``ChunkID`` field, we can extract the byte information as follows,
+
+```
+byte byteArray[] = new byte[4]; // Declaration of Byte Array for the desired size
+int r = fileInputstream.read(byteArray, 0, numberOfBytes[i]); // reading the byte information, r will store the number of bytes which is read
+```
+- We need to handle three types of data types here, String, int and short. String data type's values are stored here in BIG ENDIAN format and the numerical data type's values are stored here in LITTLE ENDIAN format. 
+To read the String data types, we just have to do the following, 
+```
+chunkID =  new String(byteArray);
+```
+To, read the numerical data types, we have to take some extra measure. We will use ``ByteBuffer``, which provides a powerful interface to convert a byte array to a number (float, int, short, etc )
+```
+public ByteBuffer ByteArrayToNumber(byte bytes[], int numOfBytes, int type){
+        ByteBuffer buffer = ByteBuffer.allocate(numOfBytes); //allocating a space in ByteBuffer object based on the desired numOfBytes value
+        if (type == 0){
+            buffer.order(BIG_ENDIAN); // setting the bit orders (BIG ENDIAN or LITTLE ENDIAN)
+        }
+        else{
+            buffer.order(LITTLE_ENDIAN);
+        }
+        buffer.put(bytes); // putting the bytes 
+        buffer.rewind(); // this is basically for byte size syncronization 
+        return buffer;
+}
+byteBuffer = ByteArrayToNumber(byteArray, numOfBytes, type); // type = BIG or LITTLE ENDIAN, numOfBytes = denotes the allocating space size, byteArray = where the read byte information is
+byteBuffer.getInt() // will provide the int converted value stored in byteBuffer 
+byteBuffer.getShort() // will provide the short converted value stored in byteBuffer 
+// ByteBuffer automatically handles the sign values and provides the correct output
+```
+This basically sums up the basic logic block to read an wav file. The complete code can be found in [WAVManipulation.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/WavManipulation.java). 
 
 
 
