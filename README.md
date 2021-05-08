@@ -9,6 +9,9 @@ Now, I will see breakdown each task one by one and discuss my approach. This wri
 - [Accessing a file](#accessing-a-file)
 - [Structure of a WAV file](#structure-of-a-wav-file)
 - [Reading a WAV file](#reading-a-wav-file)
+- [Writing a WAV file](#writing-a-wav-file)
+- [Permission](#permission)
+
 
 ### Accessing a file
 I put my wav file in the ``asset`` folder. I have attached a screenshot to understand my file structure. Here, you can see the wav file (20_sec.wav). I had to access this file now.
@@ -150,8 +153,27 @@ outFile.writeBytes("RIFF");
 outFile.writeInt(Integer.reverseBytes((int)ChunkSize)); // 04 - how big is the rest of this file?
 outFile.writeShort(Short.reverseBytes((short)Format)); // 20 - what is the audio format? 1 for PCM = Pulse Code Modulation
 ```
+- To convert the actual audio data to byte we can use the following function. Here, we converted from short data type array to byte array, but we can change accordingly based on our data types.
+```
+public byte[] NumericalArray2ByteArray(short[] values){ // Give your data type 
+            ByteBuffer buffer = ByteBuffer.allocate(2 * values.length); // for short:2, for float: 4, for int: 4
+            buffer.order(LITTLE_ENDIAN); // fixing the order (numerical values are in LITTLE ENDIAN)
+            for (short value : values){
+                  buffer.putShort(value); //converting to bytes 
+            }
+            buffer.rewind(); // to sync according to data type size
+            return buffer.array(); // converting into byte type array
+    }
+byte clipData[] = NumericalArray2ByteArray(wavData);
+outFile.write(clipData);
+```
+- Finally after writing all the fields accordingly, close and flush the writer pointer. 
+```
+outFile.flush();
+outFile.close();
+```
+This, basically sums up the writing logic of wav file. The complete code can be found in [WAVManipulation.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/WavManipulation.java). 
 
-
-
+### Permission
 
 
