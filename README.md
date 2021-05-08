@@ -11,6 +11,7 @@ Now, I will see breakdown each task one by one and discuss my approach. This wri
 - [Reading a WAV file](#reading-a-wav-file)
 - [Writing a WAV file](#writing-a-wav-file)
 - [Permission](#permission)
+- [Accessing the newly created WAV file](#accessing-the-newly-created-wav-file)
 
 
 ### Accessing a file
@@ -175,5 +176,62 @@ outFile.close();
 This, basically sums up the writing logic of wav file. The complete code can be found in [WAVManipulation.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/WavManipulation.java). 
 
 ### Permission
+Another important part to the whole procedure is to setting up permissions which can become quite an issue if not set properly. Here, we will talk about that,
+- First set permission in the Manifest.xml file 
+```
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+```
+- In general scenarios, the previous step should be enough to set up the permissions. But sometimes we may need to set the runtime permissions on the fly. To do that we can follow the below code snippet. 
+```
+// Assume this Activity is the current activity
+int permissionCheck = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+if (permissionCheck==PackageManager.PERMISSION_GRANTED){
+            //this means permission is granted and you can do read and write
+}else{
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+}
+```
+- Also, we can check the permissions using the below set up. 
+```
+public void checkExternalMedia(){
+        boolean mExternalStorageAvailable = false;
+        boolean mExternalStorageWriteable = false;
+        String state = Environment.getExternalStorageState();
+
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            // Can read and write the media
+            mExternalStorageAvailable = mExternalStorageWriteable = true;
+        } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            // Can only read the media
+            mExternalStorageAvailable = true;
+            mExternalStorageWriteable = false;
+        } else {
+            // Can't read or write
+            mExternalStorageAvailable = mExternalStorageWriteable = false;
+        }
+        System.out.println("\n\nExternal Media: readable="
+                +mExternalStorageAvailable+" writable="+mExternalStorageWriteable);
+    }
+```
+So, this wraps up how we can set permissions and read and write back a wav file. 
+
+### Accessing the newly created WAV file 
+We, wrote our new wav file in external environment or SD card. To access that file, we can use adb or Android Bridge. 
+```
+adb   pull   /storage/emulated/0/new_wav_directory/new_wav_file.wav    test.wav
+```
+
+### References 
+- [http://soundfile.sapp.org/doc/WaveFormat/](http://soundfile.sapp.org/doc/WaveFormat/)
+- [https://stackoverflow.com/questions/9179536/writing-pcm-recorded-data-into-a-wav-file-java-android](https://stackoverflow.com/questions/9179536/writing-pcm-recorded-data-into-a-wav-file-java-android)
+- [https://stackoverflow.com/questions/14619653/how-to-convert-a-float-into-a-byte-array-and-vice-versa/14619742](https://stackoverflow.com/questions/14619653/how-to-convert-a-float-into-a-byte-array-and-vice-versa/14619742) 
+- [https://stackoverflow.com/questions/44636323/creating-folders-and-writing-files-to-external-storage](https://stackoverflow.com/questions/44636323/creating-folders-and-writing-files-to-external-storage)
+- [https://stackoverflow.com/questions/60426631/how-do-i-read-my-saved-wav-file-as-byte-or-double-array-i-am-using-java-andr](https://stackoverflow.com/questions/60426631/how-do-i-read-my-saved-wav-file-as-byte-or-double-array-i-am-using-java-andr)
+- [https://stackoverflow.com/questions/31399122/how-to-access-storage-emulated-0/49434928](https://stackoverflow.com/questions/31399122/how-to-access-storage-emulated-0/49434928) 
+- [https://www.youtube.com/watch?v=7CEcevGbIZU&t=283s](https://www.youtube.com/watch?v=7CEcevGbIZU&t=283s)
+
 
 
