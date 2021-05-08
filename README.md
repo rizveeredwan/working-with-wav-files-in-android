@@ -27,7 +27,28 @@ Now, based on the returned path, I could easily access the file.
 ### Reading a WAV file
 As, in android, I could not find any dedicated library to read the whole information of the wav file to some workable and easily understandable state, I had to write it from scratch handling those complex byte operations. Here, I will show the flow, 
 
-First, I will refer to this ![documentation](soundfile.sapp.org/doc/WaveFormat/) which provides the file structure of an wav file. 
+First, I will refer to this ![documentation](soundfile.sapp.org/doc/WaveFormat/) which provides the file structure of an wav file. To summarize the whole information there, this following table can be seen, 
+
+Order  | Offset | Name | Size (bytes) | Data Type | Expected value 
+------------ | ------------- | --------- | --------------- | ----------------| --------
+big | 0 | ChunkID | 4 | String | 
+little | 4 | ChunkSize | 4 | int | 
+big | 8 | Format | 4 | String | 
+big | 12 | SubChunk1ID | 4 | String | 
+little | 16 | SubChunk1Size | 4 | int 
+little | 20 | AudioFormat | 2 | short
+little | 22 | NumChannels | 2 | short
+little | 24 | SampleRate | 4 | int 
+little | 28 | ByteRate | 4 | int 
+little | 32 | BlockAlign | 2 | short
+little | 34 | BitsPerSample | 2 | short
+big | 36 | SubChunk2ID | 4 | string
+little | 40 | SubChunk2Size | 4 | int 
+little | 44 | data | | | 
+
+
+
+
 
 
 
