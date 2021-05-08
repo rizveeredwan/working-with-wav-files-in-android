@@ -24,9 +24,7 @@ public static String assetFilePath(Context context, String assetName) throws IOE
 ```
 Now, based on the returned path, I could easily access the file. 
 
-### Reading a WAV file
-As, in android, I could not find any dedicated library to read the whole information of the wav file to some workable and easily understandable state, I had to write it from scratch handling those complex byte operations. Here, I will show the flow, 
-
+### Structure of a WAV file
 First, I will refer to this ![documentation](soundfile.sapp.org/doc/WaveFormat/) which provides the file structure of an wav file. To summarize the whole information there, this following table can be seen, 
 
 Order  | Offset | Name | Size (bytes) | Data Type | Expected value 
@@ -64,6 +62,11 @@ Strings are in BIG ENDIAN format
 ```
 Numbers are in LITTLE ENDIAN format
 ```
+
+### Reading a WAV file 
+
+We have to read byte by byte from the file to extract all the information. To initiate the reading pointer, we will use the following code snippet. 
+
 
 
 
