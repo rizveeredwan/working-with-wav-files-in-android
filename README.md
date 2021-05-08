@@ -2,10 +2,10 @@
 A repository which contains the complete code to read data from an wav file and to create a new one for android applications.
 
 # Motivation 
-In python, it is quite easy to read data from an wav file and to write back into another one aka creation of a new wav file. All the byte level complexities have already been handled in various popular libraries (e.g., SciPy). But, I could not find any dedicated libaries for this in android. So, had to go through complete documentation and lots of stackoverflow answers to grasp the whole thing, the wav file structure, the byte level operations, the permissions etc. Thought to put up all the investigations in one place. 
+In python, it is quite easy to read data from an wav file and to write back into another one aka creation of a new wav file. All the byte level complexities have already been handled in various popular libraries (e.g., SciPy). But, I could not find any dedicated libraries for this in android. So, had to go through complete documentation and lots of stackoverflow answers to grasp the whole thing, the wav file structure, the byte level operations, the permissions etc. Thought to put up all the investigations in one place. 
 
 ## Logics and Codes
-Now, I will see breakdown each task one by one and discuss my approach. This writeup mainly focuses on how we can read the complete byte information from an wav file, convert it to an workable state so that we can perform manipulation and finally how we can construct a new wav file after the manipulation of the data along with accessing the newly created file. Sections will be, 
+Now, I will breakdown each task one by one and discuss my approach. This write up mainly focuses on how we can read the complete byte information from an wav file, convert it to an workable state so that we can perform manipulation and finally how we can construct a new wav file after the manipulation of the data along with accessing the newly created file. Sections will be, 
 - [Accessing a file](#accessing-a-file)
 - [Structure of a WAV file](#structure-of-a-wav-file)
 - [Reading a WAV file](#reading-a-wav-file)
@@ -19,7 +19,7 @@ I put my wav file in the ``asset`` folder. I have attached a screenshot to under
 
 ![File Structure](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/file_structure.png). 
 
-I used the following function, to get the complete path (absolute path) of the wav file. 
+Now, we will use the following function, to get the complete path (absolute path) of the wav file.
 ```
 public static String assetFilePath(Context context, String assetName) throws IOException {
             File file = new File(context.getFilesDir(), assetName);
@@ -28,7 +28,7 @@ public static String assetFilePath(Context context, String assetName) throws IOE
             }
 }
 ```
-Now, based on the returned path, I could easily access the file. 
+Now, based on the returned path, we can easily access the file.
 
 ### Structure of a WAV file
 First, I will refer to this ![documentation](soundfile.sapp.org/doc/WaveFormat/) which provides the file structure of an wav file. To summarize the whole information there, this following table can be seen, 
