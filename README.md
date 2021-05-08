@@ -232,6 +232,7 @@ adb   pull   /storage/emulated/0/new_wav_directory/new_wav_file.wav    test.wav
 - [https://stackoverflow.com/questions/60426631/how-do-i-read-my-saved-wav-file-as-byte-or-double-array-i-am-using-java-andr](https://stackoverflow.com/questions/60426631/how-do-i-read-my-saved-wav-file-as-byte-or-double-array-i-am-using-java-andr)
 - [https://stackoverflow.com/questions/31399122/how-to-access-storage-emulated-0/49434928](https://stackoverflow.com/questions/31399122/how-to-access-storage-emulated-0/49434928) 
 - [https://www.youtube.com/watch?v=7CEcevGbIZU&t=283s](https://www.youtube.com/watch?v=7CEcevGbIZU&t=283s)
+- [https://stackoverflow.com/questions/16241492/wav-sample-data-value-starting-index](https://stackoverflow.com/questions/16241492/wav-sample-data-value-starting-index)
 
 
 
