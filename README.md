@@ -46,8 +46,24 @@ big | 36 | SubChunk2ID | 4 | string | "data"
 little | 40 | SubChunk2Size | 4 | int | NumSamples * NumChannels * BitsPerSample/8
 little | 44 | data | | | the actual data
 
+But, there can be a very important variation. In offset 36-40, where we expect to have a string "data", we might get a different string which is "LIST". In this case, there will be some additional data and file structure will vary as follows, 
 
+Order  | Offset | Name | Size (bytes) | Data Type | Expected value 
+------------ | ------------- | --------- | --------------- | ----------------| --------
+big | 36 | SubChunk2ID | 4 | string | "LIST"
+little | 40 | Additional | 4 | int | This amount of byte value has to be skipped afterwards, lets say 26 is found
+little | 44-69 | Additional Information | | Has to be skipped to get the actual data 
+big | 70 | SubChunk2ID | 4 | string | "data"
+little | 74 | SubChunk2Size | 4 | int | NumSamples * NumChannels * BitsPerSample/8
+little | 78 | data | | | the actual data
 
+Another important observation is, 
+```
+Strings are in BIG ENDIAN format
+```
+```
+Numbers are in LITTLE ENDIAN format
+```
 
 
 
