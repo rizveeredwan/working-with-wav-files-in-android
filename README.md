@@ -127,7 +127,7 @@ while (true){
     if (v == -1) break; // when all the bytes will be read, we will get -1 in variable v
   }
 ```
-This basically sums up the basic logic block to read an wav file. The complete code can be found in [WAVManipulation.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/WavManipulation.java). 
+This basically sums up the basic logic block to read an wav file. The complete code can be found in [MainActivity.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/MainActivity.java). 
 
 ### Writing a WAV file 
 As, we have already understood the file's (byte information and fields) structure, now to create a new WAV file, we just have to put all the informations accordingly, following the field's order, data types (String, int, short) and bit orders (BIG or LITTLE ENDIAN). The main points of the work flow can be stated as follows, 
@@ -173,7 +173,7 @@ outFile.write(clipData);
 outFile.flush();
 outFile.close();
 ```
-This, basically sums up the writing logic of wav file. The complete code can be found in [WAVManipulation.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/WavManipulation.java). 
+This, basically sums up the writing logic of wav file. The complete code can be found in [MainActivity.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/MainActivity.java). 
 
 ### Permission
 Another important part to the whole procedure is to setting up permissions which can become quite an issue if not set properly. Here, we will talk about that,
