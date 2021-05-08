@@ -9,4 +9,25 @@ Now, I will see breakdown each task one by one and discuss my approach. This wri
 - [Accessing a file](#accessing-a-file)
 
 ### Accessing a file
-I put my wav file in the ``asset`` folder. I have attached a screenshot to understand my ![File Structure](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/file_structure.png). 
+I put my wav file in the ``asset`` folder. I have attached a screenshot to understand my file structure. Here, you can see the wav file (20_sec.wav). I had to access this file now.
+
+![File Structure](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/file_structure.png). 
+
+I used the following function, to get the complete path (absolute path) of the wav file. 
+```
+public static String assetFilePath(Context context, String assetName) throws IOException {
+            File file = new File(context.getFilesDir(), assetName);
+            if (file.exists() && file.length() > 0) {
+                return file.getAbsolutePath();
+            }
+}
+```
+Now, based on the returned path, I could easily access the file. 
+
+### Reading a WAV file
+As, in android, I could not find any dedicated library to read the whole information of the wav file to some workable and easily understandable state, I had to write it from scratch handling those complex byte operations. Here, I will show the flow, 
+
+First, I will refer to this ![documentation](soundfile.sapp.org/doc/WaveFormat/) which provides the file structure of an wav file. 
+
+
+
