@@ -66,7 +66,10 @@ Numbers are in LITTLE ENDIAN format
 ### Reading a WAV file 
 
 We have to read byte by byte from the file to extract all the information. To initiate the reading pointer, we will use the following code snippet. 
-
+```
+File file = new File(audioFile); // absolute path of the audio file 
+InputStream fileInputstream = new FileInputStream(file); // we will use InputStream to read the bytes
+```
 
 
 
