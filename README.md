@@ -107,7 +107,7 @@ byteBuffer.getInt() // will provide the int converted value stored in byteBuffer
 byteBuffer.getShort() // will provide the short converted value stored in byteBuffer 
 // ByteBuffer automatically handles the sign values and provides the correct output
 ```
-Now, we will talk how, we can read the actual audio data. The logic is almost similar which we have discussed upto now. But, there are some important factor to highlight. In, ``BitsPerSample`` field, we get values like 8, 16, etc. Dividing it by 8 (8/8 =1, 16/8 = 2) we get the number of bytes required to read an individual sample. So, the whole reading audio data process can be done as follows,
+Now, we will talk how, we can read the actual audio data. The logic is almost similar which we have discussed up to now. But, there are some important factor to highlight. In, ``BitsPerSample`` field, we get values like 8, 16, etc. Dividing it by 8 (8/8 =1, 16/8 = 2) we get the number of bytes required to read an individual sample. So, the whole reading audio data process can be done as follows,
 ```
 public float convertToFloat(byte[] array, int type) { // Another way to convert a byte array to a number, you can also use the previous function
         ByteBuffer buffer = ByteBuffer.wrap(array);
@@ -130,7 +130,7 @@ while (true){
 This basically sums up the basic logic block to read an wav file. The complete code can be found in [MainActivity.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/MainActivity.java). 
 
 ### Writing a WAV file 
-As, we have already understood the file's (byte information and fields) structure, now to create a new WAV file, we just have to put all the informations accordingly, following the field's order, data types (String, int, short) and bit orders (BIG or LITTLE ENDIAN). The main points of the work flow can be stated as follows, 
+As, we have already understood the file's (byte information and fields) structure, now to create a new WAV file, we just have to put all the information accordingly, following the field's order, data types (String, int, short) and bit orders (BIG or LITTLE ENDIAN). The main points of the work flow can be stated as follows, 
 - First, we need to create a pointer to write the data. We, will create the file in SD Card or external environment. Then based on that, we will create the file writing pointer. 
 ```
 File root = android.os.Environment.getExternalStorageDirectory();
@@ -168,7 +168,7 @@ public byte[] NumericalArray2ByteArray(short[] values){ // Give your data type
 byte clipData[] = NumericalArray2ByteArray(wavData);
 outFile.write(clipData);
 ```
-- Finally after writing all the fields accordingly, close and flush the writer pointer. 
+- Finally after writing all the fields accordingly, we will close and flush the writer pointer. 
 ```
 outFile.flush();
 outFile.close();
@@ -183,7 +183,7 @@ Another important part to the whole procedure is to setting up permissions which
     <uses-permission android:name="android.permission.STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
-- In general scenarios, the previous step should be enough to set up the permissions. But sometimes we may need to set the runtime permissions on the fly. To do that we can follow the below code snippet. 
+- In general scenarios, the previous step should be enough to set up the permissions. But sometimes we may need to set the runtime permissions on the fly. To do that we can use the below code snippet. 
 ```
 // Assume this Activity is the current activity
 int permissionCheck = ContextCompat.checkSelfPermission(this,
