@@ -103,8 +103,12 @@ byteBuffer.getInt() // will provide the int converted value stored in byteBuffer
 byteBuffer.getShort() // will provide the short converted value stored in byteBuffer 
 // ByteBuffer automatically handles the sign values and provides the correct output
 ```
+Now, we will talk how, we can read the actual audio data. The logic is almost similar which we have discussed upto now. But, there are some important factor to highlight. In, ``BitsPerSample`` field, we get values like 8/16 
+
+
 This basically sums up the basic logic block to read an wav file. The complete code can be found in [WAVManipulation.java](https://github.com/rizveeredwan/working-with-wav-files-in-android/blob/main/WavManipulation.java). 
 
-
+### Writing a WAV file 
+As, we have already understood the file's structure 
 
 
